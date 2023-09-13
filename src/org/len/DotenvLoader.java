@@ -1,3 +1,22 @@
+/*
+ * Copyright PT Len Industri (Persero)
+ *
+ * THIS SOFTWARE SOURCE CODE AND ANY EXECUTABLE DERIVED THEREOF ARE PROPRIETARY
+ * TO PT LEN INDUSTRI (PERSERO), AS APPLICABLE, AND SHALL NOT BE USED IN ANY WAY
+ * OTHER THAN BEFOREHAND AGREED ON BY PT LEN INDUSTRI (PERSERO), NOR BE REPRODUCED
+ * OR DISCLOSED TO THIRD PARTIES WITHOUT PRIOR WRITTEN AUTHORIZATION BY
+ * PT LEN INDUSTRI (PERSERO), AS APPLICABLE.
+ */
+
+/*
+ * @author Hendra
+ * */
+
+/*
+ * the class for load env file
+ */
+
+
 package org.len;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,8 +26,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DotenvLoader {
+    /* Load env config.env
+     */
     public static Map<String, String> loadEnvVariables() {
-        String filename = "C:\\Users\\Prawira\\IdeaProjects\\be-surface-tracking\\src\\org\\len\\.env";
+        String currentDir = System.getProperty("user.dir");
+        String filename = currentDir + "/src/org/len/config.env";
         Map<String, String> envVariables = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {

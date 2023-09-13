@@ -1,3 +1,21 @@
+/*
+ * Copyright PT Len Industri (Persero)
+ *
+ * THIS SOFTWARE SOURCE CODE AND ANY EXECUTABLE DERIVED THEREOF ARE PROPRIETARY
+ * TO PT LEN INDUSTRI (PERSERO), AS APPLICABLE, AND SHALL NOT BE USED IN ANY WAY
+ * OTHER THAN BEFOREHAND AGREED ON BY PT LEN INDUSTRI (PERSERO), NOR BE REPRODUCED
+ * OR DISCLOSED TO THIRD PARTIES WITHOUT PRIOR WRITTEN AUTHORIZATION BY
+ * PT LEN INDUSTRI (PERSERO), AS APPLICABLE.
+ */
+
+/*
+ * @author Hendra
+ * */
+
+/*
+ * the class for Handling consumer kafka for receive message from track simulator
+ */
+
 package org.len.kafka;
 import java.util.Properties;
 
@@ -12,12 +30,14 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.concurrent.Future;
 
-import static org.len.db.Memcached.mc;
+import static org.len.db.Memcached.memcacheClient;
 
 public class KafkaConfiguration {
     private final KafkaConsumer<String, String> consumer;
     private volatile boolean running = true;
 
+    /* setup conf for connect to kafka as consumer
+    */
     public KafkaConfiguration(String bootstrapServers, String groupId, String topic) {
         Properties properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -33,6 +53,11 @@ public class KafkaConfiguration {
         this.consumer = consumer;
     }
 
+    /* consuming messages from kafka marshal to TrackSim model class,
+        store to memcached client
+        push to websocket
+        set TrachNumber to global array
+     */
     public void startConsumingMessagesInThread() {
         ObjectMapper objectMapper = new ObjectMapper();
         Thread consumerThread = new Thread(() -> {
@@ -43,7 +68,7 @@ public class KafkaConfiguration {
                     try {
                         trackSim = objectMapper.readValue( record.value(), TrackSim.class);
                         System.out.printf("Received message: value = %s%n", trackSim);
-                        mc.set(String.valueOf(trackSim.getTrackNumber()), 0, record.value());
+                        memcacheClient.set(String.valueOf(trackSim.getTrackNumber()), 0, record.value());
                         Websocket.sendMessageToAll(record.value());
                         TrackDataHelper.setTrackData(String.valueOf(trackSim.getTrackNumber()));
                     } catch (Exception e) {

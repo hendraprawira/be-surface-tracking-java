@@ -11,5 +11,7 @@
     <orderEntry type="library" name="spymemcached-2.10.3" level="application" />
     <orderEntry type="library" name="postgresql-42.6.0" level="application" />
     <orderEntry type="library" name="kafka" level="application" />
+    <orderEntry type="library" name="jar" level="application" />
+    <orderEntry type="library" name="gson-2.2.2" level="application" />
   </component>
 </module>

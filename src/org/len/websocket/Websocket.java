@@ -32,17 +32,27 @@ import javax.websocket.Session;
 import javax.websocket.CloseReason.CloseCodes;
 import javax.websocket.server.ServerEndpoint;
 
-import static org.len.db.Memcached.mc;
+import static org.len.db.Memcached.memcacheClient;
 
+/* set Endpoint
+ */
 @ServerEndpoint(value = "/ownplatform")
 public class Websocket {
-    private static List<Session> sessions = new ArrayList<>();
+
+    /* set list session for multiple client/conection
+     */
+    private static final List<Session> SESSIONS = new ArrayList<>();
+
+    /* set onOpen to add client/connection
+     */
     @OnOpen
     public void onOpen(Session session) {
         System.out.println ("Connected, sessionID = " + session.getId());
-        sessions.add(session);
+        SESSIONS.add(session);
     }
 
+    /* onMessage websocket
+     */
     @OnMessage
     public String onMessage(String message, Session session) {
         System.out.println(message);
@@ -56,18 +66,22 @@ public class Websocket {
         return message;
     }
 
+
+    /* onClose websocket
+     */
     @OnClose
     public void onClose(Session session, CloseReason closeReason) {
         System.out.println("Session " + session.getId() +
                 " closed because " + closeReason);
     }
 
-    // Create a function to send messages to all connected clients
+    /* Create a function to send messages to all connected clients
+     */
     public static void sendMessageToAll(String message) {
 
             Thread senderThread = new Thread(() -> {
-                if (sessions != null){
-                for (Session session : sessions) {
+                if (SESSIONS != null){
+                for (Session session : SESSIONS) {
                     try {
                         session.getBasicRemote().sendText(message);
                     } catch (IOException e) {
@@ -82,6 +96,8 @@ public class Websocket {
 
     }
 
+    /* store memcached track every 10secs make a thread
+     */
     public static void storeMmc() {
         int index = 0;
         while(true){
@@ -89,15 +105,14 @@ public class Websocket {
                 try {
                     int finalIndex = index;
                     Thread mmcThread = new Thread(() -> {
-
-                        Map<String, Object> result = mc.getBulk(TrackDataHelper.getTrackData());
+                        Map<String, Object> result = memcacheClient.getBulk(TrackDataHelper.getTrackData());
                         for (String key : TrackDataHelper.getTrackData()) {
                             Object value = result.get(key);
                             if (value != null) {
                                 // The value is found in Memcached
                                 String keyVal = "log-" + finalIndex + "-track-" + key;
-                                mc.set(keyVal, 0, value);
-                                System.out.println("Value for key '" + keyVal + "': " + value.toString());
+                                memcacheClient.set(keyVal, 0, value);
+                                System.out.println("Value for key '" + keyVal + "': " + value);
                             } else {
                                 // The value is not found in Memcached
                                 System.out.println("Key '" + key + "' not found in Memcached.");
@@ -106,7 +121,6 @@ public class Websocket {
 
                     });
                     mmcThread.start();
-
                     // Sleep for 10 seconds (10000 milliseconds)
                     Thread.sleep(10000);
                     System.out.println("After sleep");

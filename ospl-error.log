@@ -1,0 +1,16 @@
+========================================================================================
+Report      : ERROR
+Date        : 2023-09-13T13:00:12+0700
+Description : ddsi_udp_conn_write failed with error code 10051
+Node        : LAPTOP-T2907TUU
+Process     : java.exe <21324>
+Thread      : tev 1368
+Internals   : 6.9.210323OSS///ddsi2/ddsi_udp.c/147/0/1694584812.811382100/4
+========================================================================================
+Report      : ERROR
+Date        : 2023-09-13T13:00:12+0700
+Description : ddsi_udp_conn_write failed with error code 10051
+Node        : LAPTOP-T2907TUU
+Process     : java.exe <21324>
+Thread      : tev 1368
+Internals   : 6.9.210323OSS///ddsi2/ddsi_udp.c/147/0/1694584812.812048400/4

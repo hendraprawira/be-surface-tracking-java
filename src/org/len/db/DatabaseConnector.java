@@ -1,3 +1,21 @@
+/*
+ * Copyright PT Len Industri (Persero)
+ *
+ * THIS SOFTWARE SOURCE CODE AND ANY EXECUTABLE DERIVED THEREOF ARE PROPRIETARY
+ * TO PT LEN INDUSTRI (PERSERO), AS APPLICABLE, AND SHALL NOT BE USED IN ANY WAY
+ * OTHER THAN BEFOREHAND AGREED ON BY PT LEN INDUSTRI (PERSERO), NOR BE REPRODUCED
+ * OR DISCLOSED TO THIRD PARTIES WITHOUT PRIOR WRITTEN AUTHORIZATION BY
+ * PT LEN INDUSTRI (PERSERO), AS APPLICABLE.
+ */
+
+/*
+ * @author Hendra
+ * */
+
+/*
+ * the class for database driver
+ */
+
 package org.len.db;
 
 import org.len.DotenvLoader;
@@ -21,6 +39,11 @@ public class DatabaseConnector {
         String dbType = envVariables.get("DB_TYPE");
         Class.forName("org.postgresql.Driver");
         String jdbcUrl;
+
+        /* flexible changes db connection by env dbType var
+
+         */
+
         if ("mysql".equals(dbType)) {
             jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
         } else if ("postgres".equals(dbType)) {
