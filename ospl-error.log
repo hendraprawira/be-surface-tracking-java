@@ -14,3 +14,29 @@ Node        : LAPTOP-T2907TUU
 Process     : java.exe <21324>
 Thread      : tev 1368
 Internals   : 6.9.210323OSS///ddsi2/ddsi_udp.c/147/0/1694584812.812048400/4
+========================================================================================
+Context     : org.opensplice.dds.dcps.DomainParticipantFactoryImpl.create_participant
+Date        : 2023-09-14T10:13:22+0700
+Node        : LAPTOP-T2907TUU
+Process     : java.exe <11864>
+Thread      : 8928
+Internals   : DomainParticipantFactoryImpl.java/175/6.9.210323OSS///-1
+----------------------------------------------------------------------------------------
+Report      : Unable to connect to domain id = 4.
+              The most common causes of this error are an incorrect configuration file or
+              that OpenSpliceDDS is not running (when using shared memory mode).
+Internals   : u_participantNew/u_participant.c/234/773/1694661202.990775500
+----------------------------------------------------------------------------------------
+Report      : Failed to start Spliced for domain 'ospl_sp_ddsi' within 10 seconds, result = U_RESULT_OK
+
+Internals   : user::u_domain::startSpliceThread/u_domain.c/1253/769/1694661202.990810000
+========================================================================================
+Context     : org.opensplice.dds.dcps.DomainParticipantImpl.create_topic
+Date        : 2023-09-14T10:15:05+0700
+Node        : LAPTOP-T2907TUU
+Process     : java.exe <8664>
+Thread      : 4756
+Internals   : DomainParticipantImpl.java/593/6.9.210323OSS///1
+----------------------------------------------------------------------------------------
+Report      : Bad parameter: topic_name 'null' is invalid.
+Internals   : org.opensplice.dds.dcps.DomainParticipantImpl.create_topic/DomainParticipantImpl.java/554/3/1694661305.300855100

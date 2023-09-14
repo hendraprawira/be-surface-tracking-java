@@ -20,10 +20,12 @@ package org.len.ospl;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import com.google.gson.Gson;
+import org.len.DotenvLoader;
 import org.len.main.Main;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ServiceEnvironment;
@@ -44,6 +46,7 @@ import OwnPlatformData.Opf;
 public class OsplSubs extends Thread {
     @Override
     public void run(){
+        Map<String, String> envVariables = DotenvLoader.loadEnvVariables();
         System.setProperty(
                 ServiceEnvironment.IMPLEMENTATION_CLASS_NAME_PROPERTY,
                 "org.opensplice.dds.core.OsplServiceEnvironment");
@@ -58,7 +61,7 @@ public class OsplSubs extends Thread {
 
         /* Create Participant by domainID, same as configuration ospl.xml
          */
-        DomainParticipant participant = dpf.createParticipant(4);
+        DomainParticipant participant = dpf.createParticipant(1);
 
         /* set Reliability OSPL
          */
@@ -75,11 +78,11 @@ public class OsplSubs extends Thread {
         /* set Partition
          */
         Partition partition = PolicyFactory.getPolicyFactory(env).Partition()
-                .withName("HelloWorld example");
+                .withName(envVariables.get("OSPL_PARTITION"));
 
         /* set Topics
          */
-        Topic<Opf> topics = participant.createTopic("TestTopic", OwnPlatformData.Opf.class,
+        Topic<Opf> topics = participant.createTopic(envVariables.get("OSPL_TOPIC"), OwnPlatformData.Opf.class,
                 participant.getDefaultTopicQos().withPolicies(reliability, durability), null, statuses);
 
         /* Create Subscriber
@@ -99,7 +102,7 @@ public class OsplSubs extends Thread {
         } catch (TimeoutException e) {
             System.out.println("Ended");
         }
-        System.out.println("=== [Subscriber] Ready...");
+        System.out.println("OSPL Subscriber is running");
 
         Gson gson = new Gson();
         boolean closed = false;

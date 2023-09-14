@@ -26,63 +26,13 @@ public class TrackSim {
     private int time;
 
     private int mode1code;
-
-    public int getMode1code() {
-        return mode1code;
-    }
-
-    public void setMode1code(int mode1code) {
-        this.mode1code = mode1code;
-    }
-
     private int mode2code;
-
-    public int getMode2code() {
-        return mode2code;
-    }
-
-    public void setMode2code(int mode2code) {
-        this.mode2code = mode2code;
-    }
-
-    public int getMode3code() {
-        return mode3code;
-    }
-
-    public void setMode3code(int mode3code) {
-        this.mode3code = mode3code;
-    }
-
-    public int getMode4code() {
-        return mode4code;
-    }
-
-    public void setMode4code(int mode4code) {
-        this.mode4code = mode4code;
-    }
-
-    public int getMode5code() {
-        return mode5code;
-    }
-
-    public void setMode5code(int mode5code) {
-        this.mode5code = mode5code;
-    }
 
     private int mode3code;
 
     private int mode4code;
 
     private int mode5code;
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
     private double distance;
     private double latitude;
     private double longitude;
@@ -314,5 +264,53 @@ public class TrackSim {
 
     public void setBearing(double bearing) {
         this.bearing = bearing;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public int getMode1code() {
+        return mode1code;
+    }
+
+    public void setMode1code(int mode1code) {
+        this.mode1code = mode1code;
+    }
+
+    public int getMode2code() {
+        return mode2code;
+    }
+
+    public void setMode2code(int mode2code) {
+        this.mode2code = mode2code;
+    }
+
+    public int getMode3code() {
+        return mode3code;
+    }
+
+    public void setMode3code(int mode3code) {
+        this.mode3code = mode3code;
+    }
+
+    public int getMode4code() {
+        return mode4code;
+    }
+
+    public void setMode4code(int mode4code) {
+        this.mode4code = mode4code;
+    }
+
+    public int getMode5code() {
+        return mode5code;
+    }
+
+    public void setMode5code(int mode5code) {
+        this.mode5code = mode5code;
     }
 }
